@@ -1,0 +1,11 @@
+
+package projetoescola;
+
+public class Pessoa {
+    protected String nome,cpf;
+   
+}
+    
+    
+    
+
