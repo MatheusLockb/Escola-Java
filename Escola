@@ -1,10 +1,19 @@
 
 package projetoescola;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Escola {
     private String nome, endereco, nId;
     private int anofundacao;
     private Diretor diretor;
+    private Professor professor;
+    private Aluno aluno;
+    private Curso curso;
+    private List<Curso> cursos;
+    
+    
+    
     
     public Escola(String nome, String endereco, String nId, int anofundacao) {
         this.nome = nome;
@@ -12,6 +21,7 @@ public class Escola {
         this.nId = nId;
         this.anofundacao = anofundacao;
         this.diretor= null;
+         this.cursos = new ArrayList<>();
     }
 
     public String getnome() {
@@ -57,11 +67,73 @@ public class Escola {
       this.diretor = new Diretor (diretorAssociado , idDiretorinput , datacontratacaoinput , cpfinput);
    }
     
+    public void adicionarprofessor (String professor, int idprofessor, String datacontratacao, String cpf){
+        Professor novoProfessor = new Professor(professor, idprofessor, datacontratacao, cpf);
+         this.professor = novoProfessor; 
+    }
+   
+    public void adicionaraluno (String nome, String cpf,  String num_matricula, String serie, String data_inscricao){
+        this.aluno = new Aluno(nome, cpf, num_matricula, serie, data_inscricao, anofundacao);
+       
+    }
+    
+   public void adicionarCurso(String nome, String descricao, int codigo, int anoInicio) {
+        Curso novoCurso = new Curso(nome, descricao, codigo, anoInicio);
+        this.cursos.add(novoCurso);
+    }
+    
+    
+   public void associarProfessorAoCurso(String professorNome, int idProfessor, String dataContratacao, String cpf) {
+        Professor novoProfessor = new Professor(professorNome, idProfessor, dataContratacao, cpf);
+        if (!cursos.isEmpty()) {
+            
+            Curso ultimoCurso = this.cursos.get(this.cursos.size() - 1);
+            
+            
+           if (ultimoCurso.getProfessor() == null || !ultimoCurso.getProfessor().temMesmoId(novoProfessor)) {
+            ultimoCurso.setProfessor(novoProfessor);
+        } else {
+            System.out.println("Erro: Professor com o mesmo ID já associado a este curso.");
+        }
+    } else {
+        System.out.println("Erro: Nenhum curso encontrado para associar o professor.");
+    }
+    }
     
     
     
     
+    //DEBUG CONSTRUTORES
+   public void detalhes() {
+    System.out.println("Aluno: " + this.aluno.nome);
+    System.out.println("Diretor: " + this.diretor.nome);
+
+    if (this.professor != null) {
+        System.out.println("Nome do professor: " + this.professor.getNome());
+    } else {
+        System.out.println("Nenhum professor associado a esta escola.");
+    }
+
+    for (Curso curso : cursos) {
+        System.out.println("Detalhes do Curso:");
+        System.out.println("Nome do Curso: " + curso.getNome());
+        System.out.println("Descrição do Curso: " + curso.getDescricao());
+
+        Professor professorDoCurso = curso.getProfessor();
+        if (professorDoCurso != null) {
+            System.out.println("Nome do Professor do Curso: " + professorDoCurso.getNome());
+        } else {
+            System.out.println("Nenhum professor associado a este curso.");
+        }
+    }
 }
+
+       
+       
+       
+       
+   }
+
         
     
     
