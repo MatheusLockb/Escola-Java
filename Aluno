@@ -1,6 +1,32 @@
 
 package projetoescola;
 
-public class Aluno {
+public class Aluno extends Pessoa {
+    private String num_matricula, serie, data_inscricao;
+    private int idade;
+    private double nota1, nota2;
+
+    public Aluno(String nome, String cpf, String num_matricula, String serie, String data_inscricao, int idade) {
+        this.nome = nome;
+        this.cpf= cpf;
+        this.num_matricula = num_matricula;
+        this.serie = serie;
+        this.data_inscricao = data_inscricao;
+        this.idade = idade;
+    }
+
+    public String getNum_matricula() {
+        return num_matricula;
+    }
+
+    public String getData_inscricao() {
+        return data_inscricao;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+    
+    
     
 }
