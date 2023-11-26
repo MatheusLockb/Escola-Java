@@ -2,5 +2,44 @@
 package projetoescola;
 
 public class Curso {
+    private String nome, descricao;
+    private int codigo, ano_inicio;
+    private Professor professor;
+
+    public Curso(String nome, String descricao, int codigo, int ano_inicio) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.codigo = codigo;
+        this.ano_inicio = ano_inicio;
+        
+    }
+    
+    //metodo para setar professor 
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
+    }
+//
+    public Professor getProfessor() {
+        return professor;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public int getAno_inicio() {
+        return ano_inicio;
+    }
+    
+    
     
 }
+
