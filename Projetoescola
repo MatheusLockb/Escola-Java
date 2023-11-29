@@ -11,18 +11,31 @@ public class Projetoescola {
         Escola escola1 = new Escola ("Nome","","",10);
         escola1.Associardiretor("Alessandra rsrs", "232321", "29/03/99", "12321");
        escola1.adicionarprofessor("a", 1, "", "");
-        escola1.adicionaraluno("bolinha ", "1231232131", 1, "3° ano ", "19/12/1234",12);
+        
+       escola1.adicionaraluno("bolinha ", "1231232131", 1, "3° ano ", "19/12/1234",12);
+        
         escola1.adicionaraluno("rs", "2312313", 2, "aaaaa", "12313131",12);
+        
         escola1.adicionarCurso("curso piroca1", "asdsad", 12, 12312);
+       
         escola1.associarProfessorAoCurso("professor piroca", 1, "asd", "@!32131");
-       escola1.associarAlunoAoCurso("al", 1, 12, 10);
-        
-        escola1.AdicionarNota(1, 5.4, 9.9);
+       
         
         
+        
+        
+        escola1.associarAlunoAoCurso("bolinha", 1, 12, 10);
+        escola1.associarAlunoAoCurso("ximblinha", 2, 12, 50);
+        escola1.AdicionarNota(1, 5, 5);
+        escola1.AdicionarNota(2, 10, 10);
+        
+        
+        
+        
+        //DEBUG ESCOLA 1 
         
        // escola1.detalhes();
-       // escola1.detalhes1();
+       //escola1.detalhes1();
         escola1.mostrarNotasETurmas();
         
         
