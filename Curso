@@ -1,17 +1,22 @@
 
+        
 package projetoescola;
+import java.util.List;
+import java.util.ArrayList;
 
-public class Curso {
+public class Curso  {
     private String nome, descricao;
     private int codigo, ano_inicio;
     private Professor professor;
+     private List<Aluno> alunos;
+    
 
     public Curso(String nome, String descricao, int codigo, int ano_inicio) {
         this.nome = nome;
         this.descricao = descricao;
         this.codigo = codigo;
         this.ano_inicio = ano_inicio;
-        
+        this.alunos = new ArrayList<>();
     }
     
     //metodo para setar professor 
@@ -31,6 +36,12 @@ public class Curso {
         return descricao;
     }
 
+    public List<Aluno> getAlunos() {
+        return alunos;
+    }
+
+    
+    
     public int getCodigo() {
         return codigo;
     }
@@ -40,6 +51,13 @@ public class Curso {
     }
     
     
+    public void adicionarAluno(Aluno aluno) {
+        this.alunos.add(aluno);
+    }
+    
+    
+    
+    
+    
     
 }
-
