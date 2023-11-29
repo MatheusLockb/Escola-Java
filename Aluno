@@ -56,4 +56,7 @@ public class Aluno extends Pessoa {
         return (nota1 + nota2) / 2.0;
     }
   
+    
+    
+    //
 }
