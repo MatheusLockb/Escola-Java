@@ -7,6 +7,7 @@ public class Escola {
     private String nome, endereco, nId;
     private int anofundacao;
     private Diretor diretor;
+    private List<Diretor> diretores;
     private List<Professor> professores;
     private List<Aluno> alunos;
     private Curso curso;
@@ -22,8 +23,9 @@ public class Escola {
         this.anofundacao = anofundacao;
         this.diretor= null;
         this.professores = new ArrayList<>();
-        this.alunos = new ArrayList<>();
         this.cursos = new ArrayList<>();
+        this.alunos = new ArrayList<>();
+        this.diretores = new ArrayList<>();
     }
 
     public String getnome() {
@@ -66,7 +68,8 @@ public class Escola {
     
     
     public void Associardiretor(String diretorAssociado, String idDiretorinput, String datacontratacaoinput,String cpfinput ){
-      this.diretor = new Diretor (diretorAssociado , idDiretorinput , datacontratacaoinput , cpfinput);
+      Diretor novoDiretor = new Diretor (diretorAssociado , idDiretorinput , datacontratacaoinput , cpfinput);
+      this.diretores.add(novoDiretor);
    }
     
     public void adicionarprofessor (String professor, int idprofessor, String datacontratacao, String cpf){
@@ -104,7 +107,7 @@ public class Escola {
     }
    
   public void associarAlunoAoCurso(String alunoNome, int numMatricula, int codigoCurso, int idade) {
-    Aluno novoAluno = new Aluno(alunoNome, "", numMatricula, "", "", idade);
+    
 
     // Encontrar o curso 
     Curso cursoAssociado = null;
@@ -116,14 +119,8 @@ public class Escola {
     }
 
     if (cursoAssociado != null) {
-        // Verificar se o número de matrícula já existe
-        for (Aluno alunoExistente : cursoAssociado.getAlunos()) {
-            if (alunoExistente.getNum_matricula() == numMatricula) {
-                System.out.println("Erro: Aluno já associado a este curso com o número de matrícula fornecido.");
-                return;
-            }
-        }
-
+     
+        Aluno novoAluno = new Aluno(alunoNome, "", numMatricula, "", "", idade);
         // Associar o aluno ao curso
         cursoAssociado.adicionarAluno(novoAluno);
     } else {
@@ -133,10 +130,10 @@ public class Escola {
 }
   
   
-//// caso der merda apagar aqui 
+
   public void AdicionarNota (int numMatricula, double nota1, double nota2) {
       for (Curso curso : cursos) {  
-      for (Aluno aluno : alunos) {
+      for (Aluno aluno : curso.getAlunos()) {
             if (aluno.getNum_matricula() == numMatricula) {
                 aluno.setNota1(nota1);
                 aluno.setNota2(nota2);
@@ -183,7 +180,7 @@ public class Escola {
 }
 
 // Método para calcular a média da turma
-private double calcularMediaTurma(List<Aluno> alunos) {
+    private double calcularMediaTurma(List<Aluno> alunos) {
     if (alunos.isEmpty()) {
         return 0.0;
     }
