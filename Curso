@@ -8,6 +8,7 @@ public class Curso  {
     private String nome, descricao;
     private int codigo, ano_inicio;
     private Professor professor;
+    private List<Professor> professores;
      private List<Aluno> alunos;
     
 
@@ -17,6 +18,7 @@ public class Curso  {
         this.codigo = codigo;
         this.ano_inicio = ano_inicio;
         this.alunos = new ArrayList<>();
+        this.professores = new ArrayList<>();
     }
     
     //metodo para setar professor 
@@ -24,8 +26,8 @@ public class Curso  {
         this.professor = professor;
     }
 //
-    public Professor getProfessor() {
-        return professor;
+    public List<Professor> getProfessor() {
+        return professores;
     }
 
     public String getNome() {
@@ -55,7 +57,9 @@ public class Curso  {
         this.alunos.add(aluno);
     }
     
-    
+    public void adicionarProfessor (Professor professor){
+        this.professores.add(professor);
+    }
     
     
     
