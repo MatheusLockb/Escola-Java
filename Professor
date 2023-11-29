@@ -1,5 +1,4 @@
 
-
 package projetoescola;
 
 public class Professor extends Pessoa {
