@@ -7,8 +7,8 @@ public class Escola {
     private String nome, endereco, nId;
     private int anofundacao;
     private Diretor diretor;
-    private Professor professor;
-    private Aluno aluno;
+    private List<Professor> professores;
+    private List<Aluno> alunos;
     private Curso curso;
     private List<Curso> cursos;
     
@@ -21,7 +21,9 @@ public class Escola {
         this.nId = nId;
         this.anofundacao = anofundacao;
         this.diretor= null;
-         this.cursos = new ArrayList<>();
+        this.professores = new ArrayList<>();
+        this.alunos = new ArrayList<>();
+        this.cursos = new ArrayList<>();
     }
 
     public String getnome() {
@@ -69,11 +71,12 @@ public class Escola {
     
     public void adicionarprofessor (String professor, int idprofessor, String datacontratacao, String cpf){
         Professor novoProfessor = new Professor(professor, idprofessor, datacontratacao, cpf);
-         this.professor = novoProfessor; 
+         this.professores.add(novoProfessor);
     }
    
-    public void adicionaraluno (String nome, String cpf,  String num_matricula, String serie, String data_inscricao){
-        this.aluno = new Aluno(nome, cpf, num_matricula, serie, data_inscricao, anofundacao);
+    public void adicionaraluno (String nome, String cpf,  int num_matricula, String serie, String data_inscricao,int idade){
+        Aluno novoAluno = new Aluno(nome, cpf,num_matricula, serie, data_inscricao, idade);
+        this.alunos.add(novoAluno); 
        
     }
     
@@ -99,20 +102,135 @@ public class Escola {
         System.out.println("Erro: Nenhum curso encontrado para associar o professor.");
     }
     }
-    
-    
-    
-    
-    //DEBUG CONSTRUTORES
-   public void detalhes() {
-    System.out.println("Aluno: " + this.aluno.nome);
-    System.out.println("Diretor: " + this.diretor.nome);
+   
+  public void associarAlunoAoCurso(String alunoNome, int numMatricula, int codigoCurso, int idade) {
+    Aluno novoAluno = new Aluno(alunoNome, "", numMatricula, "", "", idade);
 
-    if (this.professor != null) {
-        System.out.println("Nome do professor: " + this.professor.getNome());
-    } else {
-        System.out.println("Nenhum professor associado a esta escola.");
+    // Encontrar o curso 
+    Curso cursoAssociado = null;
+    for (Curso curso : cursos) {
+        if (curso.getCodigo() == codigoCurso) {
+            cursoAssociado = curso;
+            break;
+        }
     }
+
+    if (cursoAssociado != null) {
+        // Verificar se o número de matrícula já existe
+        for (Aluno alunoExistente : cursoAssociado.getAlunos()) {
+            if (alunoExistente.getNum_matricula() == numMatricula) {
+                System.out.println("Erro: Aluno já associado a este curso com o número de matrícula fornecido.");
+                return;
+            }
+        }
+
+        // Associar o aluno ao curso
+        cursoAssociado.adicionarAluno(novoAluno);
+    } else {
+        System.out.println("Erro: Nenhum curso encontrado com o código fornecido.");
+    }
+
+}
+  
+  
+//// caso der merda apagar aqui 
+  public void AdicionarNota (int numMatricula, double nota1, double nota2) {
+      for (Curso curso : cursos) {  
+      for (Aluno aluno : alunos) {
+            if (aluno.getNum_matricula() == numMatricula) {
+                aluno.setNota1(nota1);
+                aluno.setNota2(nota2);
+                return;
+            }
+        }
+      }
+        System.out.println("Erro: Aluno não encontrado com o número de matrícula fornecido.");
+    }
+  
+  
+   
+   
+    //DEBUG PARA RELATORIO 
+  public void mostrarNotasETurmas() {
+    System.out.println("Notas e Média da Turma:");
+
+    for (Curso curso : cursos) {
+        System.out.println("Curso: " + curso.getNome());
+
+        // Verificar se há alunos no curso
+        if (!curso.getAlunos().isEmpty()) {
+            System.out.println("Alunos:");
+
+            // Mostrar notas de cada aluno
+            for (Aluno aluno : curso.getAlunos()) {
+                System.out.println("Nome do Aluno: " + aluno.getNome());
+                System.out.println("Número de Matrícula: " + aluno.getNum_matricula());
+                System.out.println("Nota 1: " + aluno.getNota1());
+                System.out.println("Nota 2: " + aluno.getNota2());
+                System.out.println("Média do Aluno: " + aluno.calcularMedia());
+                System.out.println("-------------------");
+            }
+
+            // Calcular e mostrar a média da turma
+            double mediaTurma = calcularMediaTurma(curso.getAlunos());
+            System.out.println("Média da Turma: " + mediaTurma);
+        } else {
+            System.out.println("Nenhum aluno inscrito neste curso.");
+        }
+
+        System.out.println("=======================================");
+    }
+}
+
+// Método para calcular a média da turma
+private double calcularMediaTurma(List<Aluno> alunos) {
+    if (alunos.isEmpty()) {
+        return 0.0;
+    }
+
+    double somaNotas = 0;
+    for (Aluno aluno : alunos) {
+        somaNotas += aluno.calcularMedia();
+    }
+
+    return somaNotas / alunos.size();
+}
+  
+  
+  
+  
+    //metodo para calcular media da turma
+ 
+    
+   
+   
+  
+  
+  
+  
+  
+  
+  
+  
+
+       //debug 
+       
+   public void detalhes() {
+    System.out.println("Diretor: " + (this.diretor != null ? this.diretor.getNome() : "Nenhum diretor associado"));
+
+    System.out.println("Professores:");
+
+    for (Professor professor : professores) {
+        System.out.println("Nome do Professor: " + professor.getNome());
+    }
+
+    System.out.println("Alunos:");
+
+    for (Aluno aluno : alunos) {
+        System.out.println("Nome do Aluno: " + aluno.getNome());
+    }
+
+    System.out.println("Cursos:");
 
     for (Curso curso : cursos) {
         System.out.println("Detalhes do Curso:");
@@ -125,11 +243,52 @@ public class Escola {
         } else {
             System.out.println("Nenhum professor associado a este curso.");
         }
+
+        System.out.println("Alunos do Curso:");
+
+        for (Aluno aluno : curso.getAlunos()) {
+            System.out.println("Nome do Aluno: " + aluno.getNome() + ", Número de Matrícula: " + aluno.getNum_matricula());
+        }
     }
 }
 
-       
-       
+public void detalhes1() {
+    System.out.println("Diretor: " + (this.diretor != null ? this.diretor.getNome() : "Nenhum diretor associado"));
+
+    System.out.println("Professores:");
+
+    for (Professor professor : professores) {
+        System.out.println("Nome do Professor: " + professor.getNome());
+    }
+
+    System.out.println("Alunos:");
+
+    for (Aluno aluno : alunos) {
+        System.out.println("Nome do Aluno: " + aluno.getNome());
+    }
+
+    System.out.println("Cursos:");
+
+    for (Curso curso : cursos) {
+        System.out.println("Detalhes do Curso:");
+        System.out.println("Nome do Curso: " + curso.getNome());
+        System.out.println("Descrição do Curso: " + curso.getDescricao());
+
+        Professor professorDoCurso = curso.getProfessor();
+        if (professorDoCurso != null) {
+            System.out.println("Nome do Professor do Curso: " + professorDoCurso.getNome());
+        } else {
+            System.out.println("Nenhum professor associado a este curso.");
+        }
+
+        System.out.println("Alunos do Curso:");
+
+        for (Aluno aluno : curso.getAlunos()) {
+            System.out.println("Nome do Aluno: " + aluno.getNome() + ", Número de Matrícula: " + aluno.getNum_matricula());
+        }
+    }
+}
+
        
        
    }
